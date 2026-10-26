@@ -1,0 +1,26 @@
+{
+  "name": "kiyoshi-live",
+  "version": "1.0.0",
+  "description": "Autonomous FX trading bot on Celo (Textile FX + Uniswap v3) — live mode",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/desk.js",
+    "desk": "node dist/desk.js",
+    "check": "node dist/check.js",
+    "verify": "node dist/verify.js",
+    "backfill": "node dist/backfill.js",
+    "register": "node dist/register.js",
+    "new-wallet": "node dist/new-wallet.js"
+  },
+  "dependencies": {
+    "@celo/attribution-tags": "latest",
+    "dotenv": "^16.4.5",
+    "viem": "^2.21.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0"
+  }
+}
