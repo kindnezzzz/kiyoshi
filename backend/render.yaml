@@ -1,0 +1,41 @@
+# Render blueprint for the Kiyoshi Live trading bot.
+# Deploy: New > Blueprint, connect this repo (or upload this folder).
+# The bot ALWAYS trades — set AGENT_PRIVATE_KEY to your agent wallet key in Render's UI.
+services:
+  - type: web
+    name: kiyoshi-live
+    runtime: node
+    plan: free
+    autoDeploy: true
+    buildCommand: npm install && npm run build
+    startCommand: npm run desk
+    healthCheckPath: /health
+    envVars:
+      # --- REQUIRED: your agent wallet private key (set it in the Render UI) ---
+      - key: AGENT_PRIVATE_KEY
+        value: ""
+      # --- Network ---
+      - key: CELO_RPC
+        value: "https://forno.celo.org"
+      # --- Trading behaviour ---
+      - key: MAX_TRADE_USD
+        value: "20"         # max USD per cycle (never more than 90% of USDT held)
+      - key: MIN_EDGE_USD
+        value: "0.01"       # minimum expected profit to take a trade
+      - key: INTERVAL_SEC
+        value: "60"         # scan interval in seconds
+      - key: MAX_FLATTEN_LOSS_BPS
+        value: "50"         # loss guard: max loss % on leftover inventory (0.5%)
+      - key: MAX_HOLD_MIN
+        value: "30"         # max minutes to hold leftover inventory before selling
+      - key: STARTUP_DELAY_SEC
+        value: "60"         # wait before first trade (avoids two instances trading at once)
+      # --- Optional ---
+      # - key: ATTRIBUTION_TAG
+      #   value: "celo_f6214d29d540"
+      # - key: AGENT_ID
+      #   value: "9991"
+      # - key: BASELINE_EQUITY
+      #   value: ""
+      # - key: DATA_DIR
+      #   value: "/data"     # needs a persistent disk to keep the ledger
